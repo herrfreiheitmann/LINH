@@ -69,7 +69,7 @@
       display: block;
       width: 52%;
       height: 3px;
-      margin-top: 5px;
+      margin: 5px auto 0;
       background: var(--azul);
     }
 
@@ -88,8 +88,6 @@
       letter-spacing: .06em;
     }
 
-    nav a:hover,
-    nav a:active,
     nav a[aria-current="location"] {
       color: var(--azul-claro);
       border-color: var(--azul);
@@ -183,7 +181,7 @@
     <div class="contenedor barra">
       <a class="marca" href="#inicio" aria-label="LINH, inicio">LINH</a>
       <nav aria-label="Navegación principal">
-        <a href="#inicio" aria-current="location">Inicio</a>
+        <a href="#inicio">Inicio</a>
         <a href="#equipo">Equipo</a>
         <a href="#cel">CEL</a>
         <a href="#archivo">Archivo LINH</a>
@@ -240,7 +238,7 @@
     const enlaces = [...document.querySelectorAll("nav a")];
 
     function marcarApartado() {
-      const activo = enlaces.find(enlace => enlace.hash === location.hash) ?? enlaces[0];
+      const activo = enlaces.find(enlace => enlace.hash === location.hash);
 
       for (const enlace of enlaces) {
         if (enlace === activo) {
