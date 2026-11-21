@@ -1,3 +1,215 @@
+ <!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LINH</title>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&amp;display=swap">
+  <style>
+    :root {
+      color-scheme: dark;
+      --titulos: "Almendra", Georgia, serif;
+      --fondo: #101010;
+      --texto: #ededed;
+      --borde: #555;
+      --pistola: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='40' viewBox='0 0 48 40'%3E%3Cpath d='M3 6 9 3 41 6 45 19 39 23 44 33 39 37 32 38 27 25 21 26 20 21 8 23 5 19Z' fill='%23202020' stroke='%23aaa' stroke-linejoin='round'/%3E%3Cpath d='M9 4 40 7 43 15 10 13Z' fill='%23838383'/%3E%3Cpath d='M10 14 43 16 44 19 10 19Z' fill='%23585858'/%3E%3Cpath d='M9 19h15l-3 5-12 1z' fill='%23696969'/%3E%3Cpath d='M28 20h9l-3 5h-6z' fill='%23080808' stroke='%23787878'/%3E%3Cpath d='M33 25h5l4 8-4 3-4 1z' fill='%23373737'/%3E%3Cellipse cx='6' cy='12' rx='2.4' ry='5.2' fill='%230a0a0a' stroke='%23787878'/%3E%3Cpath d='M12 6 39 8M13 15l27 2' stroke='%23bbb' stroke-opacity='.55'/%3E%3C/svg%3E") 3 12;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font: 1.125rem / 1.7 Georgia, serif;
+    }
+
+    .portada {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      place-items: center;
+      min-height: clamp(24rem, 72svh, 52rem);
+      padding: 2rem 1rem;
+      background: #282828;
+    }
+
+    .portada::before,
+    .portada::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    .portada::before {
+      z-index: -2;
+      background: url("./fondo.jpg.png") center 66% / cover no-repeat;
+      filter: grayscale(1);
+    }
+
+    .portada::after {
+      z-index: -1;
+      background: linear-gradient(180deg, #09090922, #09090966 60%, var(--fondo));
+    }
+
+    h1, h2, summary { font-family: var(--titulos); }
+
+    h1 {
+      margin: 0;
+      padding-inline-start: .12em;
+      font-size: clamp(3.5rem, 17vw, 13rem);
+      font-weight: 700;
+      letter-spacing: .12em;
+      line-height: 1;
+      text-shadow: 0 .05em .2em #000;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .25rem clamp(1rem, 6vw, 3rem);
+      padding: .5rem 1rem;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .menu a {
+      padding: .4rem .65rem;
+      color: var(--texto);
+      font: 700 1.35rem / 1.4 var(--titulos);
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      text-decoration: underline;
+      text-underline-offset: .25em;
+    }
+
+    main {
+      width: min(100% - 2rem, 46rem);
+      margin: auto;
+      padding-bottom: 4rem;
+    }
+
+    section {
+      padding: 2rem 0;
+      scroll-margin-top: 1rem;
+    }
+
+    section + section { border-top: 1px solid var(--borde); }
+
+    h2 {
+      margin: 0 0 .75rem;
+      font-size: clamp(2rem, 6vw, 3.25rem);
+      line-height: 1.2;
+    }
+
+    .vacio { color: #bdbdbd; }
+    .entradas:has(details) .vacio { display: none; }
+    details { border-bottom: 1px solid var(--borde); padding: 1rem 0; }
+    summary { font-size: 1.6rem; cursor: pointer; }
+    :focus-visible { outline: 2px solid #eee; outline-offset: 4px; }
+
+    .video-lateral {
+      position: fixed;
+      right: max(.75rem, env(safe-area-inset-right));
+      bottom: max(.75rem, env(safe-area-inset-bottom));
+      z-index: 4;
+      display: block;
+      width: clamp(9rem, 15vw, 15rem);
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: 4px;
+      box-shadow: 0 4px 20px #0009;
+    }
+
+    @media (max-width: 78rem) {
+      main { padding-bottom: 10rem; }
+      .video-lateral { width: clamp(8rem, 32vw, 11rem); }
+    }
+
+    .esfera-linh {
+      position: fixed;
+      left: max(.75rem, env(safe-area-inset-left));
+      bottom: max(.75rem, env(safe-area-inset-bottom));
+      z-index: 4;
+      width: clamp(2.5rem, 5vw, 3.75rem);
+      height: auto;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 4px #0008);
+    }
+
+    .esfera-linh .gota {
+      opacity: 0;
+      animation: gota-linh 8s linear infinite;
+    }
+
+    .esfera-linh .gota-tardia { animation-delay: .5s; }
+
+    @keyframes gota-linh {
+      0%, 73% { opacity: 0; transform: translateY(0); }
+      75% { opacity: 1; transform: translateY(0); }
+      83% { opacity: 1; transform: translateY(15px); }
+      87%, 100% { opacity: 0; transform: translateY(21px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .esfera-linh .gota { animation: none; }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: var(--pistola), auto; }
+      a, summary { cursor: var(--pistola), pointer; }
+      .video-lateral { cursor: auto; }
+    }
+
+    .destello {
+      position: fixed;
+      z-index: 5;
+      width: 1.25rem;
+      height: 1.25rem;
+      background: #fff;
+      clip-path: polygon(0 50%, 42% 36%, 38% 5%, 65% 36%,
+        100% 50%, 65% 64%, 38% 95%, 42% 64%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="portada">
+    <h1>LINH</h1>
+  </header>
+
+  <nav class="menu" aria-label="Secciones de LINH">
+    <a href="#entradas">Entradas</a>
+    <a href="#acerca-de">Acerca de</a>
+  </nav>
+
+  <main>
+    <section id="entradas">
+      <h2>Entradas</h2>
+      <div class="entradas">
+        <p class="vacio">Todavía no hay entradas.</p>
+
+        <!-- Copia el bloque details debajo de este comentario para publicar un texto.
+        <details>
+          <summary>Título de mi primer texto</summary>
+          <p>Primer párrafo de mi texto.</p>
+        </details>
+        -->
+      </div>
+    </section>
+
+    <section id="acerca-de">
+      <h2>Acerca de</h2>
+      <p>LINH es mi espacio para publicar textos.</p>
+    </section>
+  </main>
+
   <video class="video-lateral"
          src="./video-lateral.mp4.mp4"
          aria-label="Video lateral de LINH"
@@ -6,39 +218,6 @@
 
   <svg class="esfera-linh" xmlns="http://www.w3.org/2000/svg"
        viewBox="0 0 64 85" aria-hidden="true" focusable="false">
-    <style>
-      .esfera-linh {
-        position: fixed;
-        left: max(.75rem, env(safe-area-inset-left));
-        bottom: max(.75rem, env(safe-area-inset-bottom));
-        z-index: 4;
-        width: clamp(2.5rem, 5vw, 3.75rem);
-        height: auto;
-        pointer-events: none;
-        filter: drop-shadow(0 2px 4px #0008);
-      }
-
-      .esfera-linh .gota {
-        opacity: 0;
-        animation: gota-linh 8s linear infinite;
-      }
-
-      .esfera-linh .gota-tardia {
-        animation-delay: .5s;
-      }
-
-      @keyframes gota-linh {
-        0%, 73% { opacity: 0; transform: translateY(0); }
-        75% { opacity: 1; transform: translateY(0); }
-        83% { opacity: 1; transform: translateY(15px); }
-        87%, 100% { opacity: 0; transform: translateY(21px); }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .esfera-linh .gota { animation: none; }
-      }
-    </style>
-
     <defs>
       <radialGradient id="luz-esfera-linh" cx="32%" cy="26%" r="75%">
         <stop stop-color="#fff"/>
@@ -54,8 +233,7 @@
       <ellipse cx="32" cy="30" rx="17" ry="25"/>
       <ellipse cx="32" cy="30" rx="8" ry="25"/>
       <path d="M32 5v50 M7 30c11 9 39 9 50 0
-               M11 17c10 7 32 7 42 0
-               M11 43c10 7 32 7 42 0"/>
+               M11 17c10 7 32 7 42 0 M11 43c10 7 32 7 42 0"/>
     </g>
 
     <g fill="#090909" stroke="#777" stroke-width=".65">
@@ -64,3 +242,32 @@
             d="M39 52c0 2-2 4-2 6a2 2 0 0 0 4 0c0-2-2-4-2-6z"/>
     </g>
   </svg>
+
+  <script>
+    const cursorDeEscritorio = matchMedia("(hover: hover) and (pointer: fine)");
+    const movimientoReducido = matchMedia("(prefers-reduced-motion: reduce)");
+
+    document.addEventListener("pointerdown", (evento) => {
+      if (evento.pointerType !== "mouse" || evento.button !== 0 ||
+          !cursorDeEscritorio.matches || movimientoReducido.matches ||
+          evento.target.closest(".video-lateral")) {
+        return;
+      }
+
+      const destello = document.createElement("span");
+      destello.className = "destello";
+      destello.setAttribute("aria-hidden", "true");
+      destello.style.left = `${evento.clientX}px`;
+      destello.style.top = `${evento.clientY}px`;
+      document.body.append(destello);
+
+      const animacion = destello.animate([
+        { transform: "translate(-80%, -50%) scale(.65)", opacity: 1 },
+        { transform: "translate(-115%, -50%) scale(1.35)", opacity: 0 }
+      ], { duration: 160, easing: "ease-out" });
+
+      animacion.onfinish = () => destello.remove();
+    });
+  </script>
+</body>
+</html>
