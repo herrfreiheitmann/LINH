@@ -57,19 +57,27 @@
       padding-block: 20px;
     }
 
-    .marca {
-      font: 700 1.55rem Georgia, serif;
-      letter-spacing: .09em;
-      text-decoration: none;
+    .marca-planeta {
+      display: block;
+      width: 80px;
+      flex-shrink: 0;
+      border-radius: 50%;
     }
 
-    .marca::after {
-      content: "";
+    .marca-planeta svg {
       display: block;
-      width: 52%;
-      height: 3px;
-      margin: 5px auto 0;
-      background: var(--azul);
+      width: 100%;
+      height: auto;
+    }
+
+    .marca-planeta-texto {
+      fill: #fff;
+      stroke: #0b1116;
+      stroke-width: 24px;
+      stroke-linejoin: round;
+      paint-order: stroke fill;
+      font: 700 270px Georgia, serif;
+      letter-spacing: 14px;
     }
 
     nav {
@@ -143,7 +151,7 @@
       text-wrap: balance;
     }
 
-    section { scroll-margin-top: 9rem; }
+    section { scroll-margin-top: 11rem; }
 
     .contenido {
       display: grid;
@@ -172,9 +180,11 @@
     }
 
     @media (max-width: 600px) {
+      .marca-planeta { width: 64px; }
       .contenido { grid-template-columns: 1fr; }
       nav a { padding: 8px; letter-spacing: 0; }
       .portada .contenedor { padding-block: 40px; }
+      section { scroll-margin-top: 14rem; }
     }
   </style>
 </head>
@@ -182,7 +192,27 @@
 <body>
   <header>
     <div class="contenedor barra">
-      <a class="marca" href="#inicio" aria-label="LINH, inicio">LINH</a>
+      <a class="marca-planeta" href="#inicio" aria-label="LINH, inicio">
+        <svg viewBox="100 85 1400 1400" aria-hidden="true">
+          <defs>
+            <clipPath id="borde-planeta-linh">
+              <circle cx="800" cy="785" r="685" />
+            </clipPath>
+            <path id="arco-planeta-linh"
+                  d="M 220,850 C 470,610 620,485 800,485
+                     C 980,485 1130,610 1380,850" />
+          </defs>
+
+          <circle cx="800" cy="785" r="685" fill="#17374b" />
+          <image href="planeta.jpg" width="1600" height="1600"
+                 clip-path="url(#borde-planeta-linh)" />
+
+          <text class="marca-planeta-texto" text-anchor="middle">
+            <textPath href="#arco-planeta-linh" startOffset="50%">LINH</textPath>
+          </text>
+        </svg>
+      </a>
+
       <nav aria-label="Navegación principal">
         <a href="#inicio">Inicio</a>
         <a href="#equipo">Equipo</a>
