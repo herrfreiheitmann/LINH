@@ -5,20 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LINH</title>
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Pirata+One&amp;display=swap">
+        href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&amp;display=swap">
   <style>
     :root {
       color-scheme: dark;
-      --gotica: "Pirata One", Georgia, serif;
-      --pistola: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='32' viewBox='0 0 24 16' shape-rendering='crispEdges'%3E%3Cpath fill='%23202020' d='M0 13h2v-2h2V9h2V7H5V4h2v1h1V3h2v2h11V3h2v6H13v3h-3v-1H8v2H7v3H0z'/%3E%3Cpath fill='%237c482c' d='M1 14h2v-2h2v-2h2v1H6v2H5v2H1z'/%3E%3Cpath fill='%23b3774e' d='M2 13h1v-2h2V9h2v1H6v1H4v2z'/%3E%3Cpath fill='%23868686' d='M6 5h1v1h2V4h1v2h12v2H12v2H8V8H7V7H6z'/%3E%3Cpath fill='%23ccc' d='M10 6h12v1H10zM8 7h2v1H8z'/%3E%3Cpath fill='%23585858' d='M9 8h3v1H9zM11 10h1v1h-2v-1z'/%3E%3C/svg%3E") 45 14;
+      --titulos: "Almendra", Georgia, serif;
+      --fondo: #101010;
+      --texto: #ededed;
+      --borde: #555;
+
+      --pistola: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='40' viewBox='0 0 48 40'%3E%3Cpath d='M3 6 9 3 41 6 45 19 39 23 44 33 39 37 32 38 27 25 21 26 20 21 8 23 5 19Z' fill='%23202020' stroke='%23aaa' stroke-linejoin='round'/%3E%3Cpath d='M9 4 40 7 43 15 10 13Z' fill='%23838383'/%3E%3Cpath d='M10 14 43 16 44 19 10 19Z' fill='%23585858'/%3E%3Cpath d='M9 19h15l-3 5-12 1z' fill='%23696969'/%3E%3Cpath d='M28 20h9l-3 5h-6z' fill='%23080808' stroke='%23787878'/%3E%3Cpath d='M33 25h5l4 8-4 3-4 1z' fill='%23373737'/%3E%3Cellipse cx='6' cy='12' rx='2.4' ry='5.2' fill='%230a0a0a' stroke='%23787878'/%3E%3Cpath d='M12 6 39 8M13 15l27 2' stroke='%23bbb' stroke-opacity='.55'/%3E%3C/svg%3E") 3 12;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: #101010;
-      color: #ededed;
+      background: var(--fondo);
+      color: var(--texto);
       font: 1.125rem / 1.7 Georgia, serif;
     }
 
@@ -27,7 +31,7 @@
       isolation: isolate;
       display: grid;
       place-items: center;
-      min-height: clamp(25rem, 76svh, 54rem);
+      min-height: clamp(24rem, 72svh, 52rem);
       padding: 2rem 1rem;
       background: #282828;
     }
@@ -48,60 +52,81 @@
 
     .portada::after {
       z-index: -1;
-      background: linear-gradient(180deg, #09090922, #09090966 60%, #101010);
+      background: linear-gradient(180deg, #09090922, #09090966 60%, var(--fondo));
     }
 
-    h1, h2, summary { font-family: var(--gotica); }
+    h1, h2, summary { font-family: var(--titulos); }
 
     h1 {
       margin: 0;
-      font-size: clamp(4rem, 18vw, 15rem);
-      font-weight: 400;
-      letter-spacing: .07em;
+      padding-inline-start: .12em;
+      font-size: clamp(3.5rem, 17vw, 13rem);
+      font-weight: 700;
+      letter-spacing: .12em;
       line-height: 1;
       text-shadow: 0 .05em .2em #000;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .25rem clamp(1rem, 6vw, 3rem);
+      padding: .5rem 1rem;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .menu a {
+      padding: .4rem .65rem;
+      color: var(--texto);
+      font: 700 1.35rem / 1.4 var(--titulos);
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      text-decoration: underline;
+      text-underline-offset: .25em;
     }
 
     main {
       width: min(100% - 2rem, 46rem);
       margin: auto;
-      padding: 1rem 0 5rem;
+      padding-bottom: 4rem;
     }
+
+    section {
+      padding: 2rem 0;
+      scroll-margin-top: 1rem;
+    }
+
+    section + section { border-top: 1px solid var(--borde); }
 
     h2 {
-      margin: 0 0 1rem;
-      font-size: clamp(2.4rem, 7vw, 3.8rem);
-      font-weight: 400;
+      margin: 0 0 .75rem;
+      font-size: clamp(2rem, 6vw, 3.25rem);
+      line-height: 1.2;
     }
 
-    .entradas { border-top: 1px solid #555; }
     .vacio { color: #bdbdbd; }
     .entradas:has(details) .vacio { display: none; }
-    details { border-bottom: 1px solid #555; padding: 1rem 0; }
-    summary { font-size: 1.9rem; cursor: pointer; }
-    :focus-visible { outline: 2px solid #eee; outline-offset: 5px; }
+    details { border-bottom: 1px solid var(--borde); padding: 1rem 0; }
+    summary { font-size: 1.6rem; cursor: pointer; }
+    :focus-visible { outline: 2px solid #eee; outline-offset: 4px; }
 
     @media (hover: hover) and (pointer: fine) {
       body { cursor: var(--pistola), auto; }
-      summary { cursor: var(--pistola), pointer; }
+      a, summary { cursor: var(--pistola), pointer; }
     }
 
     .destello {
       position: fixed;
       z-index: 5;
-      width: 1.6rem;
-      height: 1.6rem;
+      width: 1.25rem;
+      height: 1.25rem;
       background: #fff;
-      clip-path: polygon(50% 0%, 59% 36%, 100% 20%, 73% 50%,
-        100% 78%, 59% 64%, 50% 100%, 39% 64%, 0% 80%, 27% 50%,
-        0% 20%, 39% 36%);
+      clip-path: polygon(0 50%, 42% 36%, 38% 5%, 65% 36%,
+        100% 50%, 65% 64%, 38% 95%, 42% 64%);
       pointer-events: none;
-      animation: disparo 170ms ease-out forwards;
-    }
-
-    @keyframes disparo {
-      from { opacity: 1; transform: translate(-50%, -50%) scale(.5); }
-      to { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
     }
   </style>
 </head>
@@ -110,26 +135,39 @@
     <h1>LINH</h1>
   </header>
 
-  <main>
-    <h2>Entradas</h2>
-    <div class="entradas">
-      <p class="vacio">Todavía no hay entradas.</p>
+  <nav class="menu" aria-label="Secciones de LINH">
+    <a href="#entradas">Entradas</a>
+    <a href="#acerca-de">Acerca de</a>
+  </nav>
 
-      <!-- Copia el bloque details debajo de este comentario para publicar una entrada.
-      <details>
-        <summary>Título de mi primer texto</summary>
-        <p>Primer párrafo de mi texto.</p>
-        <p>Segundo párrafo de mi texto.</p>
-      </details>
-      -->
-    </div>
+  <main>
+    <section id="entradas">
+      <h2>Entradas</h2>
+      <div class="entradas">
+        <p class="vacio">Todavía no hay entradas.</p>
+
+        <!-- Copia este bloque debajo del comentario para publicar un texto.
+        <details>
+          <summary>Título de mi primer texto</summary>
+          <p>Primer párrafo de mi texto.</p>
+        </details>
+        -->
+      </div>
+    </section>
+
+    <section id="acerca-de">
+      <h2>Acerca de</h2>
+      <p>LINH es mi espacio para publicar textos.</p>
+    </section>
   </main>
 
   <script>
+    const cursorDeEscritorio = matchMedia("(hover: hover) and (pointer: fine)");
+    const movimientoReducido = matchMedia("(prefers-reduced-motion: reduce)");
+
     document.addEventListener("pointerdown", (evento) => {
       if (evento.pointerType !== "mouse" || evento.button !== 0 ||
-          !matchMedia("(hover: hover) and (pointer: fine)").matches ||
-          matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          !cursorDeEscritorio.matches || movimientoReducido.matches) {
         return;
       }
 
@@ -139,7 +177,13 @@
       destello.style.left = `${evento.clientX}px`;
       destello.style.top = `${evento.clientY}px`;
       document.body.append(destello);
-      setTimeout(() => destello.remove(), 200);
+
+      const animacion = destello.animate([
+        { transform: "translate(-80%, -50%) scale(.65)", opacity: 1 },
+        { transform: "translate(-115%, -50%) scale(1.35)", opacity: 0 }
+      ], { duration: 160, easing: "ease-out" });
+
+      animacion.onfinish = () => destello.remove();
     });
   </script>
 </body>
