@@ -128,7 +128,7 @@
       );
 
       background-color: #142931;
-      background-image: var(--sombra-portada), url("Bosque.pgn");
+      background-image: var(--sombra-portada), url("./Fondofondo.jpg");
       background-size: cover;
       background-position: center;
     }
@@ -146,12 +146,15 @@
     }
 
     .portada::before {
-      background-image: var(--sombra-portada), url("MARCHILENO.jpg");
+      background-image: var(--sombra-portada), url("./MARCHILENO.jpg");
       animation: fundido-mar 24s ease-in-out infinite;
     }
 
     .portada::after {
-      background-image: var(--sombra-portada), url("Montaña.png");
+      background-image:
+        var(--sombra-portada),
+        url("./Montaña.png"),
+        url("./images%20(2).jpg");
       animation: fundido-montana 24s ease-in-out infinite;
     }
 
@@ -215,6 +218,8 @@
     }
 
     .contenido section:target { border-color: var(--azul); }
+
+    #contacto a { color: var(--azul-claro); }
 
     footer {
       border-top: 1px solid var(--borde);
@@ -312,8 +317,10 @@
 
       <section id="contacto">
         <h2>Contacto</h2>
-        <!-- Reemplaza este párrafo por el correo del laboratorio. -->
-        <p>Datos de contacto disponibles próximamente.</p>
+        <p><strong>Felipe Matías Soto Martínez</strong></p>
+        <p>Estudiante de Magíster en Ciencias Sociales en la Universidad de Los Lagos, Osorno, Chile.</p>
+        <p><a href="https://orcid.org/0009-0002-5057-4902">ORCID 0009-0002-5057-4902</a></p>
+        <p><a href="https://www.instagram.com/antropologiafungi/">Antropología Fungi en Instagram</a></p>
       </section>
 
       <section id="donar">
