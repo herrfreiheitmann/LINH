@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-        content="Laboratorio Interdisciplinar de Naturaleza y Humanidades">
+  <meta name="description" content="Laboratorio Interdisciplinar de Naturaleza y Humanidades">
   <title>LINH · Laboratorio Interdisciplinar de Naturaleza y Humanidades</title>
 
   <style>
@@ -113,7 +112,10 @@
       background-position: center;
     }
 
-    .portada .contenedor { padding-block: 56px; }
+    .portada .contenedor {
+      padding-block: 56px;
+      text-align: center;
+    }
 
     h1, h2 {
       margin: 0;
@@ -135,9 +137,10 @@
 
     .portada .subtitulo {
       max-width: 29ch;
-      margin-top: 20px;
+      margin: 20px auto 0;
       color: var(--texto);
       font: 400 clamp(1.2rem, 2.6vw, 2rem)/1.24 Georgia, serif;
+      text-wrap: balance;
     }
 
     section { scroll-margin-top: 9rem; }
