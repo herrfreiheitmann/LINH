@@ -2,10 +2,142 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LINH</title>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap">
+  <style>
+    :root {
+      color-scheme: dark;
+      --gotica: "UnifrakturMaguntia", Georgia, serif;
+      --pistola: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='24' viewBox='0 0 32 24'%3E%3Cpath d='M3 4h26v7H16l-3 5h-3l-2 6H2l4-11H3z' fill='%23222222' stroke='%23eeeeee' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M10 11h5l-2 3h-4' fill='none' stroke='%23eeeeee'/%3E%3C/svg%3E") 29 7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #101010;
+      color: #ededed;
+      font: 1.125rem / 1.7 Georgia, serif;
+    }
+
+    .portada {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      place-items: center;
+      min-height: clamp(25rem, 76svh, 54rem);
+      padding: 2rem 1rem;
+      background: #282828;
+    }
+
+    .portada::before,
+    .portada::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    .portada::before {
+      z-index: -2;
+      background: url("fondo.jpg") center 66% / cover no-repeat;
+      filter: grayscale(1);
+    }
+
+    .portada::after {
+      z-index: -1;
+      background: linear-gradient(180deg, #09090922, #09090966 60%, #101010);
+    }
+
+    h1, h2, summary { font-family: var(--gotica); }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(5rem, 19vw, 15rem);
+      font-weight: 400;
+      line-height: 1;
+      text-shadow: 0 .05em .2em #000;
+    }
+
+    main {
+      width: min(100% - 2rem, 46rem);
+      margin: auto;
+      padding: 1rem 0 5rem;
+    }
+
+    h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      font-weight: 400;
+    }
+
+    .entradas { border-top: 1px solid #555; }
+    .vacio { color: #bdbdbd; }
+    .entradas:has(details) .vacio { display: none; }
+    details { border-bottom: 1px solid #555; padding: 1rem 0; }
+    summary { font-size: 1.9rem; cursor: pointer; }
+    :focus-visible { outline: 2px solid #eee; outline-offset: 5px; }
+
+    @media (hover: hover) and (pointer: fine) {
+      body, summary { cursor: var(--pistola), auto; }
+    }
+
+    .destello {
+      position: fixed;
+      z-index: 5;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: #fff;
+      clip-path: polygon(50% 0%, 59% 36%, 100% 20%, 73% 50%,
+        100% 78%, 59% 64%, 50% 100%, 39% 64%, 0% 80%, 27% 50%,
+        0% 20%, 39% 36%);
+      pointer-events: none;
+      animation: disparo 170ms ease-out forwards;
+    }
+
+    @keyframes disparo {
+      from { opacity: 1; transform: translate(-50%, -50%) scale(.5); }
+      to { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+    }
+  </style>
 </head>
 <body>
-  <h1>LINH</h1>
-  <p>Este será mi espacio para publicar textos.</p>
+  <header class="portada">
+    <h1>LINH</h1>
+  </header>
+
+  <main>
+    <h2>Entradas</h2>
+    <div class="entradas">
+      <p class="vacio">Todavía no hay entradas.</p>
+
+      <!-- Para publicar una entrada, copia este bloque sin estas líneas de comentario.
+      <details>
+        <summary>Título de mi primer texto</summary>
+        <p>Primer párrafo de mi texto.</p>
+        <p>Segundo párrafo de mi texto.</p>
+      </details>
+      -->
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("pointerdown", (evento) => {
+      if (evento.pointerType !== "mouse" || evento.button !== 0 ||
+          matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      const destello = document.createElement("span");
+      destello.className = "destello";
+      destello.setAttribute("aria-hidden", "true");
+      destello.style.left = `${evento.clientX}px`;
+      destello.style.top = `${evento.clientY}px`;
+      document.body.append(destello);
+      setTimeout(() => destello.remove(), 200);
+    });
+  </script>
 </body>
 </html>
