@@ -13,7 +13,6 @@
       --fondo: #101010;
       --texto: #ededed;
       --borde: #555;
-
       --pistola: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='40' viewBox='0 0 48 40'%3E%3Cpath d='M3 6 9 3 41 6 45 19 39 23 44 33 39 37 32 38 27 25 21 26 20 21 8 23 5 19Z' fill='%23202020' stroke='%23aaa' stroke-linejoin='round'/%3E%3Cpath d='M9 4 40 7 43 15 10 13Z' fill='%23838383'/%3E%3Cpath d='M10 14 43 16 44 19 10 19Z' fill='%23585858'/%3E%3Cpath d='M9 19h15l-3 5-12 1z' fill='%23696969'/%3E%3Cpath d='M28 20h9l-3 5h-6z' fill='%23080808' stroke='%23787878'/%3E%3Cpath d='M33 25h5l4 8-4 3-4 1z' fill='%23373737'/%3E%3Cellipse cx='6' cy='12' rx='2.4' ry='5.2' fill='%230a0a0a' stroke='%23787878'/%3E%3Cpath d='M12 6 39 8M13 15l27 2' stroke='%23bbb' stroke-opacity='.55'/%3E%3C/svg%3E") 3 12;
     }
 
@@ -118,6 +117,26 @@
       a, summary { cursor: var(--pistola), pointer; }
     }
 
+    .video-lateral {
+      position: fixed;
+      right: max(.75rem, env(safe-area-inset-right));
+      bottom: max(.75rem, env(safe-area-inset-bottom));
+      z-index: 4;
+      display: block;
+      width: clamp(9rem, 15vw, 15rem);
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: 4px;
+      box-shadow: 0 4px 20px #0009;
+    }
+
+    @media (max-width: 78rem) {
+      main { padding-bottom: 10rem; }
+      .video-lateral { width: clamp(8rem, 32vw, 11rem); }
+    }
+
     .destello {
       position: fixed;
       z-index: 5;
@@ -161,13 +180,20 @@
     </section>
   </main>
 
+  <video class="video-lateral"
+         src="./video-lateral.mp4"
+         aria-label="Video lateral de LINH"
+         autoplay muted loop playsinline controls>
+  </video>
+
   <script>
     const cursorDeEscritorio = matchMedia("(hover: hover) and (pointer: fine)");
     const movimientoReducido = matchMedia("(prefers-reduced-motion: reduce)");
 
     document.addEventListener("pointerdown", (evento) => {
       if (evento.pointerType !== "mouse" || evento.button !== 0 ||
-          !cursorDeEscritorio.matches || movimientoReducido.matches) {
+          !cursorDeEscritorio.matches || movimientoReducido.matches ||
+          evento.target.closest(".video-lateral")) {
         return;
       }
 
