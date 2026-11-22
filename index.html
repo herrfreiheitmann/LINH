@@ -380,7 +380,9 @@
       const fotos = (await Promise.all([
         cargarFoto(["./Volcanlava.png"]),
         cargarFoto(["./Lava.png.jpg"]),
-        cargarFoto(["./es_es_bosque_borracho.png"])
+        cargarFoto(["./es_es_bosque_borracho.png"]),
+        cargarFoto(["./MARCHILENO.jpg"]),
+        cargarFoto(["./Montaña.png", "./images%20(2).jpg"])
       ])).filter(Boolean);
 
       if (fotos.length < 2) return;
