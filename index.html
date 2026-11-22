@@ -16,6 +16,12 @@
       --azul-claro: #66c9ee;
       --borde: #273740;
       --margen: clamp(20px, 5vw, 64px);
+      --sombra-banner: linear-gradient(
+        to bottom,
+        rgba(5, 15, 22, .24),
+        rgba(5, 15, 22, .72) 80%,
+        var(--fondo)
+      );
 
       --foto-inicio: url("./Fondofondo.jpg");
       --foto-equipo: url("./MARCHILENO.jpg");
@@ -137,21 +143,26 @@
       padding-block: 48px;
       text-align: center;
       background-color: #142931;
-      background-image:
-        linear-gradient(
-          to bottom,
-          rgba(5, 15, 22, .24),
-          rgba(5, 15, 22, .72) 80%,
-          var(--fondo)
-        ),
-        var(--foto);
+      background-image: var(--sombra-banner), var(--foto);
       background-position: center;
       background-size: cover;
     }
 
     .pagina[data-pagina="inicio"] .banner {
+      position: relative;
+      isolation: isolate;
       min-height: clamp(370px, 60vh, 670px);
       padding-block: 56px;
+    }
+
+    .foto-entrante {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: var(--sombra-banner), var(--foto-entrante);
+      background-position: center;
+      background-size: cover;
     }
 
     h1 {
@@ -251,8 +262,6 @@
           <p class="subtitulo">Laboratorio Interdisciplinar de Naturaleza y Humanidades</p>
         </div>
       </div>
-     
-      </div>
     </article>
 
     <article class="pagina" data-pagina="equipo" hidden>
@@ -347,6 +356,67 @@
         botonMenu.focus();
       }
     });
+
+    async function activarFundidoInicio() {
+      const reducirMovimiento = matchMedia("(prefers-reduced-motion: reduce)");
+      if (activa.dataset.pagina !== "inicio" || reducirMovimiento.matches) return;
+
+      async function cargarFoto(rutas) {
+        for (const ruta of rutas) {
+          const foto = new Image();
+          foto.src = ruta;
+          try {
+            await foto.decode();
+            return ruta;
+          } catch {
+            // Prueba la siguiente ruta si la imagen no carga.
+          }
+        }
+        return null;
+      }
+
+      const fotos = (await Promise.all([
+        cargarFoto(["./Fondofondo.jpg"]),
+        cargarFoto(["./MARCHILENO.jpg"]),
+        cargarFoto(["./Montaña.png", "./images%20(2).jpg"])
+      ])).filter(Boolean);
+
+      if (fotos.length < 2) return;
+
+      const banner = activa.querySelector(".banner");
+      const capa = document.createElement("div");
+      capa.className = "foto-entrante";
+      capa.setAttribute("aria-hidden", "true");
+
+      let actual = 0;
+      activa.style.setProperty("--foto", `url("${fotos[actual]}")`);
+
+      window.setInterval(async () => {
+        if (document.hidden || reducirMovimiento.matches || capa.isConnected) return;
+
+        const siguiente = (actual + 1) % fotos.length;
+        const foto = `url("${fotos[siguiente]}")`;
+        capa.style.setProperty("--foto-entrante", foto);
+        banner.append(capa);
+
+        const fundido = capa.animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 450,
+          easing: "ease-in-out",
+          fill: "forwards"
+        });
+
+        try {
+          await fundido.finished;
+          activa.style.setProperty("--foto", foto);
+          actual = siguiente;
+        } finally {
+          capa.remove();
+          fundido.cancel();
+        }
+      }, 4000);
+    }
+
+    activarFundidoInicio();
   </script>
 </body>
 </html>
