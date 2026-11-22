@@ -17,13 +17,12 @@
       --borde: #273740;
       --margen: clamp(20px, 5vw, 64px);
 
-      /* Fotos de cada apartado */
       --foto-inicio: url("./Fondofondo.jpg");
       --foto-equipo: url("./MARCHILENO.jpg");
       --foto-cel: url("./Montaña.png"), url("./images%20(2).jpg");
       --foto-archivo: url("./fondo.jpg.png");
-      --foto-contacto: url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1600&q=80");
-      --foto-donar: url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80");
+      --foto-contacto: url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1600&q=72");
+      --foto-donar: url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=72");
     }
 
     * { box-sizing: border-box; }
@@ -139,7 +138,12 @@
       text-align: center;
       background-color: #142931;
       background-image:
-        linear-gradient(to bottom, rgba(5, 15, 22, .24), rgba(5, 15, 22, .72) 80%, var(--fondo)),
+        linear-gradient(
+          to bottom,
+          rgba(5, 15, 22, .24),
+          rgba(5, 15, 22, .72) 80%,
+          var(--fondo)
+        ),
         var(--foto);
       background-position: center;
       background-size: cover;
@@ -192,6 +196,11 @@
     }
 
     @media (max-width: 760px) {
+      :root {
+        --foto-contacto: url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=68");
+        --foto-donar: url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=68");
+      }
+
       .barra { padding-block: 12px; }
       .boton-menu[aria-expanded] { display: block; }
       .boton-menu[aria-expanded="false"] + nav { display: none; }
@@ -224,7 +233,7 @@
       </button>
 
       <nav id="menu-principal" aria-label="Navegación principal">
-        <a href="./index.html" data-destino="inicio">Inicio</a>
+        <a href="./index.html" data-destino="inicio" aria-current="page">Inicio</a>
         <a href="?pagina=equipo" data-destino="equipo">Equipo</a>
         <a href="?pagina=cel" data-destino="cel">CEL</a>
         <a href="?pagina=archivo" data-destino="archivo">Archivo LINH</a>
@@ -243,7 +252,7 @@
         </div>
       </div>
       <div class="contenedor contenido">
-        <p>LINH es un espacio interdisciplinar en torno a la naturaleza y las humanidades.</p>
+        <p>LINH es un espacio interdisciplinar para explorar los vínculos entre la naturaleza y las humanidades. En el Archivo LINH se reunirán publicaciones, registros y materiales del laboratorio.</p>
       </div>
     </article>
 
@@ -316,9 +325,8 @@
       `[data-destino="${activa.dataset.pagina}"]`
     );
 
-    if (solicitada) {
-      enlaceActivo.setAttribute("aria-current", "page");
-    }
+    document.querySelector('[aria-current="page"]').removeAttribute("aria-current");
+    enlaceActivo.setAttribute("aria-current", "page");
 
     if (activa.dataset.pagina !== "inicio") {
       document.title = `${activa.querySelector("h1").textContent} · LINH`;
