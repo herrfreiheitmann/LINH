@@ -23,7 +23,7 @@
         var(--fondo)
       );
 
-      --foto-inicio: url("./Fondofondo.jpg");
+      --foto-inicio: url("./Volcanlava.png");
       --foto-equipo: url("./MARCHILENO.jpg");
       --foto-cel: url("./Montaña.png"), url("./images%20(2).jpg");
       --foto-archivo: url("./fondo.jpg.png");
@@ -365,6 +365,7 @@
         for (const ruta of rutas) {
           const foto = new Image();
           foto.src = ruta;
+
           try {
             await foto.decode();
             return ruta;
@@ -372,13 +373,14 @@
             // Prueba la siguiente ruta si la imagen no carga.
           }
         }
+
         return null;
       }
 
       const fotos = (await Promise.all([
-        cargarFoto(["./Fondofondo.jpg"]),
-        cargarFoto(["./MARCHILENO.jpg"]),
-        cargarFoto(["./Montaña.png", "./images%20(2).jpg"])
+        cargarFoto(["./Volcanlava.png"]),
+        cargarFoto(["./Lava.png.jpg"]),
+        cargarFoto(["./es_es_bosque_borracho.png"])
       ])).filter(Boolean);
 
       if (fotos.length < 2) return;
@@ -413,7 +415,7 @@
           capa.remove();
           fundido.cancel();
         }
-      }, 4000);
+      }, 2200);
     }
 
     activarFundidoInicio();
