@@ -17,10 +17,7 @@
       --borde: #273740;
       --margen: clamp(20px, 5vw, 64px);
       --sombra-banner: linear-gradient(
-        to bottom,
-        rgba(5, 15, 22, .24),
-        rgba(5, 15, 22, .72) 80%,
-        var(--fondo)
+        to bottom, rgba(5, 15, 22, .24), rgba(5, 15, 22, .72) 80%, var(--fondo)
       );
 
       --foto-inicio: url("./Bosque1.Png");
@@ -129,12 +126,12 @@
       background: #11232f;
     }
 
-    .pagina[data-pagina="inicio"] { --foto: var(--foto-inicio); }
-    .pagina[data-pagina="equipo"] { --foto: var(--foto-equipo); }
-    .pagina[data-pagina="cel"] { --foto: var(--foto-cel); }
-    .pagina[data-pagina="archivo"] { --foto: var(--foto-archivo); }
-    .pagina[data-pagina="contacto"] { --foto: var(--foto-contacto); }
-    .pagina[data-pagina="donar"] { --foto: var(--foto-donar); }
+    [data-pagina="inicio"] { --foto: var(--foto-inicio); }
+    [data-pagina="equipo"] { --foto: var(--foto-equipo); }
+    [data-pagina="cel"] { --foto: var(--foto-cel); }
+    [data-pagina="archivo"] { --foto: var(--foto-archivo); }
+    [data-pagina="contacto"] { --foto: var(--foto-contacto); }
+    [data-pagina="donar"] { --foto: var(--foto-donar); }
 
     .banner {
       display: grid;
@@ -148,7 +145,7 @@
       background-size: cover;
     }
 
-    .pagina[data-pagina="inicio"] .banner {
+    [data-pagina="inicio"] .banner {
       position: relative;
       isolation: isolate;
       min-height: clamp(370px, 60vh, 670px);
@@ -171,7 +168,7 @@
       text-wrap: balance;
     }
 
-    .pagina[data-pagina="inicio"] h1 {
+    [data-pagina="inicio"] h1 {
       font-size: clamp(4.5rem, 12vw, 10rem);
       line-height: .92;
     }
@@ -233,7 +230,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <div class="contenedor barra">
@@ -287,7 +283,30 @@
         <div class="contenedor"><h1>Archivo LINH</h1></div>
       </div>
       <div class="contenedor contenido">
-        <p>Espacio para reunir publicaciones, registros y materiales del laboratorio.</p>
+        <section aria-labelledby="resena-saito">
+          <h2 id="resena-saito">
+            Kohei Saito. La naturaleza contra el capital. El ecosocialismo de Karl Marx
+          </h2>
+          <p>Reseña de Bayron Cea Mansilla · <cite>Revista Espacio Regional</cite> · 2024</p>
+          <p>
+            La obra presentada es una recapitulación de la tesis doctoral de Kohei Saito,
+            concluida a finales de 2017 en Alemania y publicada en Hispanoamérica hacia 2022.
+            Esta investigación de posgrado lleva al autor a hacer una lectura de los archivos
+            aún inéditos de Karl Marx contenidos en el proyecto Marx-Engels-Gesamtausgabe II,
+            compilado y comentado por centenares de investigadores del mundo. La reseña
+            señalaba que se esperaba concluir la edición en alemán hacia finales de 2025.
+          </p>
+          <p>
+            <a href="https://www.researchgate.net/publication/397368652_KOHEI_SAITO_La_naturaleza_contra_el_capital_El_ecosocialismo_de_Karl_Marx">
+              Ver en ResearchGate
+            </a>
+          </p>
+          <p>
+            <a href="https://revistaespacioregional.ulagos.cl/index.php/espacioregional/article/download/4009/4368">
+              Descargar la reseña (PDF)
+            </a>
+          </p>
+        </section>
       </div>
     </article>
 
@@ -300,6 +319,16 @@
         <p>Antropólogo</p>
         <p><a href="https://orcid.org/0009-0002-5057-4902">ORCID 0009-0002-5057-4902</a></p>
         <p><a href="https://www.instagram.com/antropologiafungi/">Antropología Fungi</a></p>
+
+        <section aria-labelledby="bayron-cea">
+          <h2 id="bayron-cea">Bayron Aarón Cea Mansilla</h2>
+          <p>
+            Licenciado en Educación y profesor de Educación Media con mención en Historia
+            y Geografía (Ciencias Sociales), Universidad de Los Lagos.
+          </p>
+          <p><a href="mailto:bayronaron21@gmail.com">bayronaron21@gmail.com</a></p>
+          <p><a href="https://orcid.org/0009-0002-2648-1765">ORCID 0009-0002-2648-1765</a></p>
+        </section>
       </div>
     </article>
 
@@ -332,7 +361,6 @@
     const enlaceActivo = document.querySelector(
       `[data-destino="${activa.dataset.pagina}"]`
     );
-
     document.querySelector('[aria-current="page"]').removeAttribute("aria-current");
     enlaceActivo.setAttribute("aria-current", "page");
 
@@ -342,7 +370,6 @@
 
     const botonMenu = document.querySelector(".boton-menu");
     const cabecera = document.querySelector("header");
-
     botonMenu.setAttribute("aria-expanded", "false");
 
     botonMenu.addEventListener("click", () => {
